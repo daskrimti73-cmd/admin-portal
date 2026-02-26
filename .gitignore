@@ -1,0 +1,4 @@
+# Exclude subfolders that have their own repos
+CMS/
+wordpres website kejati/
+.gemini/
