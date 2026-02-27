@@ -9,7 +9,7 @@
         content="Portal admin Kejaksaan Tinggi Kepulauan Riau — Akses Dashboard Absensi Mobile dan Case Management System.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         *,
@@ -20,226 +20,278 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --bg: #f5f6fa;
-            --white: #ffffff;
-            --text: #1a1a2e;
-            --text-secondary: #64748b;
-            --border: #e2e8f0;
-            --maroon: #8B1538;
-            --maroon-dark: #6B0F2A;
-            --gold: #c8a855;
-            --blue: #2563eb;
-            --green: #059669;
-            --shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
-            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
-
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg);
-            color: var(--text);
+            background: #f8f9fb;
+            color: #1e293b;
             min-height: 100vh;
             -webkit-font-smoothing: antialiased;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* ---- Header ---- */
-        .header {
-            background: var(--white);
-            border-bottom: 1px solid var(--border);
-            padding: 0 32px;
-            height: 64px;
+        /* ---- Top Bar ---- */
+        .topbar {
+            background: linear-gradient(135deg, #7B1230 0%, #5C0D22 100%);
+            padding: 14px 32px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
 
-        .header-left {
+        .topbar-left {
             display: flex;
             align-items: center;
             gap: 12px;
         }
 
-        .header-logo {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, var(--maroon), var(--maroon-dark));
+        .topbar-logo {
+            width: 34px;
+            height: 34px;
+            background: rgba(255, 255, 255, 0.15);
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 14px;
+            color: #fcd34d;
+            font-size: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .header-title {
-            font-size: 14px;
+        .topbar-text {
+            color: #fff;
+            font-size: 13px;
             font-weight: 600;
-            color: var(--text);
+            line-height: 1.3;
         }
 
-        .header-subtitle {
-            font-size: 11px;
-            color: var(--text-secondary);
+        .topbar-text span {
+            display: block;
+            font-size: 10px;
             font-weight: 400;
+            color: rgba(255, 255, 255, 0.55);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
-        .header-right {
+        .topbar-right {
             display: flex;
             align-items: center;
-            gap: 20px;
-            font-size: 13px;
-            color: var(--text-secondary);
+            gap: 18px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.65);
         }
 
-        .status-dot {
-            width: 7px;
-            height: 7px;
-            background: var(--green);
+        .topbar-right .dot {
+            width: 6px;
+            height: 6px;
+            background: #34d399;
             border-radius: 50%;
             display: inline-block;
-            margin-right: 5px;
+            margin-right: 4px;
         }
 
-        /* ---- Main Content ---- */
-        .main {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 48px 24px 80px;
-        }
-
-        .page-title {
+        /* ---- Hero Section ---- */
+        .hero {
+            background: #fff;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 48px 32px 44px;
             text-align: center;
-            margin-bottom: 40px;
         }
 
-        .page-title h1 {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 6px;
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #fef3c7;
+            color: #92400e;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 5px 14px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            letter-spacing: 0.3px;
         }
 
-        .page-title p {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.5;
+        .hero h1 {
+            font-size: 26px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
         }
 
-        /* ---- Role Cards ---- */
-        .cards {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
+        .hero p {
+            font-size: 15px;
+            color: #64748b;
+            max-width: 420px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ---- Cards Section ---- */
+        .cards-section {
+            flex: 1;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 36px 24px 60px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
 
         .role-card {
-            background: var(--white);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 24px 28px;
-            display: flex;
-            align-items: flex-start;
-            gap: 20px;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 28px 24px 24px;
             text-decoration: none;
             color: inherit;
-            transition: box-shadow 0.2s ease, border-color 0.2s ease;
+            transition: all 0.25s ease;
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .role-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            border-radius: 14px 14px 0 0;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+
+        .role-card.absensi::before {
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        }
+
+        .role-card.cms::before {
+            background: linear-gradient(90deg, #8B1538, #c94060);
         }
 
         .role-card:hover {
-            border-color: var(--maroon);
-            box-shadow: 0 4px 16px rgba(139, 21, 56, 0.1);
+            border-color: #d1d5db;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.04);
+            transform: translateY(-2px);
         }
 
-        .card-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
+        .role-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon-wrap {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
-            flex-shrink: 0;
+            font-size: 20px;
+            margin-bottom: 18px;
         }
 
-        .card-icon.absensi {
+        .role-card.absensi .card-icon-wrap {
             background: #eff6ff;
-            color: var(--blue);
+            color: #3b82f6;
         }
 
-        .card-icon.cms {
+        .role-card.cms .card-icon-wrap {
             background: #fdf2f8;
-            color: var(--maroon);
+            color: #be185d;
         }
 
-        .card-body {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .card-label {
-            font-size: 11px;
+        .card-tag {
+            font-size: 10px;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: var(--text-secondary);
-            margin-bottom: 4px;
+            letter-spacing: 1px;
+            color: #94a3b8;
+            margin-bottom: 6px;
         }
 
-        .card-name {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text);
-            margin-bottom: 6px;
+        .card-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 8px;
         }
 
         .card-desc {
             font-size: 13px;
-            color: var(--text-secondary);
-            line-height: 1.5;
+            color: #64748b;
+            line-height: 1.55;
+            margin-bottom: 18px;
         }
 
-        .card-arrow {
-            color: #cbd5e1;
-            font-size: 14px;
-            margin-top: 14px;
-            transition: color 0.2s ease, transform 0.2s ease;
+        .card-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #94a3b8;
+            transition: color 0.2s ease;
         }
 
-        .role-card:hover .card-arrow {
-            color: var(--maroon);
+        .role-card.absensi:hover .card-action {
+            color: #3b82f6;
+        }
+
+        .role-card.cms:hover .card-action {
+            color: #be185d;
+        }
+
+        .card-action i {
+            font-size: 10px;
+            transition: transform 0.2s ease;
+        }
+
+        .role-card:hover .card-action i {
             transform: translateX(3px);
         }
 
         /* ---- Footer ---- */
         .footer {
             text-align: center;
-            padding: 24px;
+            padding: 20px;
             font-size: 12px;
             color: #94a3b8;
+            border-top: 1px solid #f1f5f9;
         }
 
         /* ---- Responsive ---- */
         @media (max-width: 640px) {
-            .header {
-                padding: 0 16px;
+            .topbar {
+                padding: 12px 16px;
             }
 
-            .main {
-                padding: 32px 16px 60px;
+            .hero {
+                padding: 36px 20px 32px;
             }
 
-            .role-card {
-                padding: 20px;
+            .hero h1 {
+                font-size: 22px;
+            }
+
+            .cards-section {
+                padding: 24px 16px 48px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
                 gap: 14px;
             }
 
-            .page-title h1 {
-                font-size: 19px;
+            .role-card {
+                padding: 22px 20px 20px;
             }
         }
     </style>
@@ -247,77 +299,77 @@
 
 <body>
 
-    <!-- Header -->
-    <header class="header">
-        <div class="header-left">
-            <div class="header-logo">
+    <!-- Top Bar -->
+    <div class="topbar">
+        <div class="topbar-left">
+            <div class="topbar-logo">
                 <i class="fas fa-landmark"></i>
             </div>
-            <div>
-                <div class="header-title">Kejaksaan Tinggi Kepulauan Riau</div>
-                <div class="header-subtitle">Portal Administrasi</div>
+            <div class="topbar-text">
+                Kejaksaan Tinggi Kepulauan Riau
+                <span>Integrated Admin Portal</span>
             </div>
         </div>
-        <div class="header-right">
-            <span><span class="status-dot"></span> Online</span>
-            <span id="clock"><i class="far fa-clock"></i></span>
+        <div class="topbar-right">
+            <span><span class="dot"></span>Sistem Aktif</span>
+            <span id="clock"></span>
         </div>
-    </header>
+    </div>
 
-    <!-- Main -->
-    <main class="main">
-        <div class="page-title">
-            <h1>Pilih Sistem Administrasi</h1>
-            <p>Silakan pilih sistem yang ingin Anda kelola.</p>
+    <!-- Hero -->
+    <div class="hero">
+        <div class="hero-badge">
+            <i class="fas fa-shield-halved" style="font-size:10px;"></i>
+            Portal Resmi
         </div>
+        <h1>Panel Administrasi</h1>
+        <p>Pilih sistem yang ingin Anda kelola. Setiap modul memiliki dashboard dan fitur administrasi tersendiri.</p>
+    </div>
 
-        <div class="cards">
-            <!-- Role A: Absensi -->
-            <a class="role-card" href="https://daskrimti73-cmd.github.io/absensi-kejati-kepri/hub.html"
+    <!-- Cards -->
+    <div class="cards-section">
+        <div class="cards-grid">
+            <!-- Absensi -->
+            <a class="role-card absensi" href="https://daskrimti73-cmd.github.io/absensi-kejati-kepri/hub.html"
                 id="card-absensi">
-                <div class="card-icon absensi">
+                <div class="card-icon-wrap">
                     <i class="fas fa-clipboard-check"></i>
                 </div>
-                <div class="card-body">
-                    <div class="card-label">Role A — Absensi</div>
-                    <div class="card-name">Dashboard Absensi Mobile</div>
-                    <div class="card-desc">Monitoring kehadiran pegawai secara real-time dengan visualisasi chart
-                        interaktif dan upload data Excel.</div>
-                </div>
-                <div class="card-arrow">
-                    <i class="fas fa-chevron-right"></i>
+                <div class="card-tag">Modul A — Absensi</div>
+                <div class="card-title">Dashboard Absensi</div>
+                <div class="card-desc">Monitoring kehadiran pegawai real-time dengan chart interaktif, upload Excel, dan
+                    rekapitulasi bulanan.</div>
+                <div class="card-action">
+                    Buka Dashboard <i class="fas fa-arrow-right"></i>
                 </div>
             </a>
 
-            <!-- Role B: CMS -->
-            <a class="role-card" href="https://daskrimti73-cmd.github.io/Dasboard-Pidum/index.html" id="card-cms">
-                <div class="card-icon cms">
+            <!-- CMS -->
+            <a class="role-card cms" href="https://daskrimti73-cmd.github.io/Dasboard-Pidum/index.html" id="card-cms">
+                <div class="card-icon-wrap">
                     <i class="fas fa-gavel"></i>
                 </div>
-                <div class="card-body">
-                    <div class="card-label">Role B — Case Management</div>
-                    <div class="card-name">CMS Kejaksaan</div>
-                    <div class="card-desc">Sistem manajemen perkara pidana umum, penuntutan, eksekusi, upaya hukum,
-                        TPPU, WNA, dan visualisasi data statistik.</div>
-                </div>
-                <div class="card-arrow">
-                    <i class="fas fa-chevron-right"></i>
+                <div class="card-tag">Modul B — Case Management</div>
+                <div class="card-title">CMS Kejaksaan</div>
+                <div class="card-desc">Manajemen perkara pidana umum, penuntutan, eksekusi, upaya hukum, TPPU, WNA, dan
+                    data statistik.</div>
+                <div class="card-action">
+                    Buka Dashboard <i class="fas fa-arrow-right"></i>
                 </div>
             </a>
         </div>
-    </main>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
-        &copy; 2026 Kejaksaan Tinggi Kepulauan Riau
+        &copy; 2026 Kejaksaan Tinggi Kepulauan Riau — Semua Hak Dilindungi
     </footer>
 
     <script>
-        // Clock
         function updateClock() {
-            const now = new Date();
-            const h = String(now.getHours()).padStart(2, '0');
-            const m = String(now.getMinutes()).padStart(2, '0');
+            var now = new Date();
+            var h = String(now.getHours()).padStart(2, '0');
+            var m = String(now.getMinutes()).padStart(2, '0');
             document.getElementById('clock').textContent = h + ':' + m + ' WIB';
         }
         updateClock();
