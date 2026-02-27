@@ -48,14 +48,15 @@
         .topbar-logo {
             width: 34px;
             height: 34px;
-            background: rgba(255, 255, 255, 0.15);
             border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fcd34d;
-            font-size: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .topbar-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .topbar-text {
@@ -303,7 +304,7 @@
     <div class="topbar">
         <div class="topbar-left">
             <div class="topbar-logo">
-                <i class="fas fa-landmark"></i>
+                <img src="logo-kejaksaan.png" alt="Logo Kejaksaan">
             </div>
             <div class="topbar-text">
                 Kejaksaan Tinggi Kepulauan Riau
