@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Admin — Kejaksaan Tinggi Kepulauan Riau</title>
+    <meta name="description"
+        content="Portal admin Kejaksaan Tinggi Kepulauan Riau — Akses Dashboard Absensi Mobile dan Case Management System.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f8f9fb;
+            color: #1e293b;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ---- Top Bar ---- */
+        .topbar {
+            background: linear-gradient(135deg, #7B1230 0%, #5C0D22 100%);
+            padding: 14px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .topbar-logo {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .topbar-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .topbar-text {
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .topbar-text span {
+            display: block;
+            font-size: 10px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.55);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.65);
+        }
+
+        .topbar-right .dot {
+            width: 6px;
+            height: 6px;
+            background: #34d399;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 4px;
+        }
+
+        .btn-logout {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.75);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-logout:hover {
+            background: rgba(255, 255, 255, 0.18);
+            color: #fff;
+        }
+
+        /* ---- Hero Section ---- */
+        .hero {
+            background: #fff;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 48px 32px 44px;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #fef3c7;
+            color: #92400e;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 5px 14px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            letter-spacing: 0.3px;
+        }
+
+        .hero h1 {
+            font-size: 26px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
+        }
+
+        .hero p {
+            font-size: 15px;
+            color: #64748b;
+            max-width: 420px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* ---- Cards Section ---- */
+        .cards-section {
+            flex: 1;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 36px 24px 60px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .role-card {
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 28px 24px 24px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .role-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            border-radius: 14px 14px 0 0;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+
+        .role-card.absensi::before {
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        }
+
+        .role-card.cms::before {
+            background: linear-gradient(90deg, #8B1538, #c94060);
+        }
+
+        .role-card:hover {
+            border-color: #d1d5db;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.04);
+            transform: translateY(-2px);
+        }
+
+        .role-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-icon-wrap {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-bottom: 18px;
+        }
+
+        .role-card.absensi .card-icon-wrap {
+            background: #eff6ff;
+            color: #3b82f6;
+        }
+
+        .role-card.cms .card-icon-wrap {
+            background: #fdf2f8;
+            color: #be185d;
+        }
+
+        .card-tag {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+            margin-bottom: 6px;
+        }
+
+        .card-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.55;
+            margin-bottom: 18px;
+        }
+
+        .card-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #94a3b8;
+            transition: color 0.2s ease;
+        }
+
+        .role-card.absensi:hover .card-action {
+            color: #3b82f6;
+        }
+
+        .role-card.cms:hover .card-action {
+            color: #be185d;
+        }
+
+        .card-action i {
+            font-size: 10px;
+            transition: transform 0.2s ease;
+        }
+
+        .role-card:hover .card-action i {
+            transform: translateX(3px);
+        }
+
+        /* ---- Footer ---- */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #94a3b8;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 640px) {
+            .topbar {
+                padding: 12px 16px;
+            }
+
+            .hero {
+                padding: 36px 20px 32px;
+            }
+
+            .hero h1 {
+                font-size: 22px;
+            }
+
+            .cards-section {
+                padding: 24px 16px 48px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            .role-card {
+                padding: 22px 20px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Bar -->
+    <div class="topbar">
+        <div class="topbar-left">
+            <div class="topbar-logo">
+                <img src="logo-kejaksaan.png" alt="Logo Kejaksaan">
+            </div>
+            <div class="topbar-text">
+                Kejaksaan Tinggi Kepulauan Riau
+                <span>Integrated Admin Portal</span>
+            </div>
+        </div>
+        <div class="topbar-right">
+            <span><span class="dot"></span>Sistem Aktif</span>
+            <span id="clock"></span>
+            <button class="btn-logout" onclick="logout()" title="Keluar dari sistem">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                Logout
+            </button>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <div class="hero">
+        <div class="hero-badge">
+            <i class="fas fa-shield-halved" style="font-size:10px;"></i>
+            Portal Resmi
+        </div>
+        <h1>Panel Administrasi</h1>
+        <p>Pilih sistem yang ingin Anda kelola. Setiap modul memiliki dashboard dan fitur administrasi tersendiri.</p>
+    </div>
+
+    <!-- Cards -->
+    <div class="cards-section">
+        <div class="cards-grid">
+            <!-- Absensi -->
+            <a class="role-card absensi" href="https://daskrimti73-cmd.github.io/absensi-kejati-kepri/hub.html"
+                id="card-absensi">
+                <div class="card-icon-wrap">
+                    <i class="fas fa-clipboard-check"></i>
+                </div>
+                <div class="card-tag">Modul A — Absensi</div>
+                <div class="card-title">Dashboard Absensi</div>
+                <div class="card-desc">Monitoring kehadiran pegawai real-time dengan chart interaktif, upload Excel, dan
+                    rekapitulasi bulanan.</div>
+                <div class="card-action">
+                    Buka Dashboard <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+
+            <!-- CMS -->
+            <a class="role-card cms" href="https://daskrimti73-cmd.github.io/Dasboard-Pidum/index.html" id="card-cms">
+                <div class="card-icon-wrap">
+                    <i class="fas fa-gavel"></i>
+                </div>
+                <div class="card-tag">Modul B — Case Management</div>
+                <div class="card-title">CMS Kejaksaan</div>
+                <div class="card-desc">Manajemen perkara pidana umum, penuntutan, eksekusi, upaya hukum, TPPU, WNA, dan
+                    data statistik.</div>
+                <div class="card-action">
+                    Buka Dashboard <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        &copy; 2026 Kejaksaan Tinggi Kepulauan Riau — Semua Hak Dilindungi
+    </footer>
+
+    <script>
+        // Auth check - redirect to login if not authenticated
+        var AUTH_KEY = 'daskrimti_auth';
+        var AUTH_EXPIRY = 24 * 60 * 60 * 1000;
+
+        function checkAuth() {
+            var auth = localStorage.getItem(AUTH_KEY);
+            if (!auth) { window.location.href = 'index.html'; return; }
+            try {
+                var data = JSON.parse(auth);
+                if (!data.timestamp || (Date.now() - data.timestamp) >= AUTH_EXPIRY) {
+                    localStorage.removeItem(AUTH_KEY);
+                    window.location.href = 'index.html';
+                }
+            } catch (e) {
+                localStorage.removeItem(AUTH_KEY);
+                window.location.href = 'index.html';
+            }
+        }
+        checkAuth();
+
+        function logout() {
+            localStorage.removeItem(AUTH_KEY);
+            window.location.href = 'index.html';
+        }
+
+        function updateClock() {
+            var now = new Date();
+            var h = String(now.getHours()).padStart(2, '0');
+            var m = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('clock').textContent = h + ':' + m + ' WIB';
+        }
+        updateClock();
+        setInterval(updateClock, 30000);
+    </script>
+</body>
+
+</html>
