@@ -493,6 +493,32 @@
             display: flex;
         }
 
+        .session-expired-message {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            color: #92400e;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         @keyframes shake {
 
             0%,
@@ -712,6 +738,16 @@
                 <p>Masukkan kredensial Anda untuk mengakses sistem administrasi.</p>
             </div>
 
+            <div id="sessionExpiredMsg" class="session-expired-message" style="display:none;">
+                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z">
+                    </path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                <span>Sesi Anda telah berakhir, silakan login kembali</span>
+            </div>
+
             <form class="login-form" id="loginForm" autocomplete="off">
                 <div id="errorMsg" class="error-message">
                     <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -818,6 +854,17 @@
             }
         }
         checkSession();
+
+        // Check if redirected due to expired session
+        (function () {
+            var params = new URLSearchParams(window.location.search);
+            if (params.get('expired') === '1') {
+                var expMsg = document.getElementById('sessionExpiredMsg');
+                if (expMsg) expMsg.style.display = 'flex';
+                // Clean the URL
+                window.history.replaceState({}, '', window.location.pathname);
+            }
+        })();
 
         // ============================================
         // FORM HANDLING
