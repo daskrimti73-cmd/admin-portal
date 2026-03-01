@@ -13,6 +13,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
+        /* Hide body until auth verified */
+        body {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        body.auth-ready {
+            opacity: 1;
+        }
+
         *,
         *::before,
         *::after {
@@ -408,7 +418,9 @@
                 var result = await sb.auth.getSession();
                 if (!result.data.session) {
                     window.location.href = 'index.html';
+                    return;
                 }
+                document.body.classList.add('auth-ready');
             } catch (e) {
                 window.location.href = 'index.html';
             }
