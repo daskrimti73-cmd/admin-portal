@@ -410,7 +410,9 @@
         // Supabase Auth Configuration
         var SUPABASE_URL = 'https://imiwlmuvelhihyfuumkw.supabase.co';
         var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImltaXdsbXV2ZWxoaWh5ZnV1bWt3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA4NzgxMDksImV4cCI6MjA4NjQ1NDEwOX0.OJVW8to47hCJ83fZSHeuPoBdOh7M15CQOYv0Ds56ncs';
-        var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+            auth: { persistSession: true, storage: window.sessionStorage }
+        });
 
         // Check Supabase session - redirect to login if not authenticated
         async function checkAuth() {
