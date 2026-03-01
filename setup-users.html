@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setup User - DASKRIMTI</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f8f9fb;
+        }
+
+        h1 {
+            color: #7B1230;
+        }
+
+        .status {
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            font-family: monospace;
+            font-size: 13px;
+            white-space: pre-wrap;
+        }
+
+        .success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        button {
+            background: #7B1230;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        button:hover {
+            background: #5C0D22;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Setup User Supabase Auth</h1>
+    <p>Klik tombol di bawah untuk membuat user login. <strong>Jalankan sekali saja!</strong></p>
+    <button id="btnSetup" onclick="setupUsers()">Buat User</button>
+    <div id="output"></div>
+
+    <script>
+        const SUPABASE_URL = 'https://imiwlmuvelhihyfuumkw.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImltaXdsbXV2ZWxoaWh5ZnV1bWt3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA4NzgxMDksImV4cCI6MjA4NjQ1NDEwOX0.OJVW8to47hCJ83fZSHeuPoBdOh7M15CQOYv0Ds56ncs';
+
+        const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const output = document.getElementById('output');
+
+        function log(msg, type) {
+            const div = document.createElement('div');
+            div.className = 'status ' + type;
+            div.textContent = msg;
+            output.appendChild(div);
+        }
+
+        async function setupUsers() {
+            document.getElementById('btnSetup').disabled = true;
+            output.innerHTML = '';
+
+            const users = [
+                { email: 'admin@kejari.go.id', password: 'admin123' },
+                { email: 'daskrimti@kejari.go.id', password: 'kejari2025' }
+            ];
+
+            for (const user of users) {
+                log('Membuat user: ' + user.email + '...', 'info');
+
+                try {
+                    const { data, error } = await sb.auth.signUp({
+                        email: user.email,
+                        password: user.password,
+                        options: {
+                            data: {
+                                username: user.email.split('@')[0]
+                            }
+                        }
+                    });
+
+                    if (error) {
+                        if (error.message.includes('already registered') || error.message.includes('already been registered')) {
+                            log('User ' + user.email + ' sudah ada (OK)', 'success');
+                        } else {
+                            log('Error untuk ' + user.email + ': ' + error.message, 'error');
+                        }
+                    } else {
+                        log('User ' + user.email + ' berhasil dibuat!\nUser ID: ' + (data.user ? data.user.id : 'N/A'), 'success');
+                    }
+                } catch (e) {
+                    log('Exception: ' + e.message, 'error');
+                }
+            }
+
+            // Sign out after creating
+            await sb.auth.signOut();
+            log('\nSelesai! Sekarang Anda bisa login dengan:\n  Username: admin (password: admin123)\n  Username: daskrimti (password: kejari2025)', 'info');
+        }
+    </script>
+</body>
+
+</html>

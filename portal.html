@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         *,
         *::before,
@@ -396,28 +397,27 @@
     </footer>
 
     <script>
-        // Auth check - redirect to login if not authenticated
-        var AUTH_KEY = 'daskrimti_auth';
-        var AUTH_EXPIRY = 24 * 60 * 60 * 1000;
+        // Supabase Auth Configuration
+        var SUPABASE_URL = 'https://imiwlmuvelhihyfuumkw.supabase.co';
+        var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImltaXdsbXV2ZWxoaWh5ZnV1bWt3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA4NzgxMDksImV4cCI6MjA4NjQ1NDEwOX0.OJVW8to47hCJ83fZSHeuPoBdOh7M15CQOYv0Ds56ncs';
+        var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        function checkAuth() {
-            var auth = localStorage.getItem(AUTH_KEY);
-            if (!auth) { window.location.href = 'index.html'; return; }
+        // Check Supabase session - redirect to login if not authenticated
+        async function checkAuth() {
             try {
-                var data = JSON.parse(auth);
-                if (!data.timestamp || (Date.now() - data.timestamp) >= AUTH_EXPIRY) {
-                    localStorage.removeItem(AUTH_KEY);
+                var result = await sb.auth.getSession();
+                if (!result.data.session) {
                     window.location.href = 'index.html';
                 }
             } catch (e) {
-                localStorage.removeItem(AUTH_KEY);
                 window.location.href = 'index.html';
             }
         }
         checkAuth();
 
-        function logout() {
-            localStorage.removeItem(AUTH_KEY);
+        // Logout via Supabase
+        async function logout() {
+            await sb.auth.signOut();
             window.location.href = 'index.html';
         }
 

@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         *,
         *::before,
@@ -65,7 +66,6 @@
             overflow: hidden;
         }
 
-        /* Animated background pattern */
         .brand-panel::before {
             content: '';
             position: absolute;
@@ -76,7 +76,6 @@
             pointer-events: none;
         }
 
-        /* Geometric grid overlay */
         .brand-panel::after {
             content: '';
             position: absolute;
@@ -167,7 +166,6 @@
             margin-bottom: 48px;
         }
 
-        /* Stats row */
         .brand-stats {
             display: flex;
             gap: 32px;
@@ -195,7 +193,6 @@
             letter-spacing: 1px;
         }
 
-        /* Floating decorative elements */
         .float-shape {
             position: absolute;
             border-radius: 50%;
@@ -244,7 +241,6 @@
             align-items: center;
             padding: 48px 32px;
             background: var(--bg);
-            position: relative;
         }
 
         .login-container {
@@ -252,7 +248,6 @@
             max-width: 400px;
         }
 
-        /* Welcome text */
         .login-welcome {
             margin-bottom: 36px;
         }
@@ -291,7 +286,6 @@
             line-height: 1.6;
         }
 
-        /* Form */
         .login-form {
             display: flex;
             flex-direction: column;
@@ -351,12 +345,6 @@
             box-shadow: 0 0 0 4px rgba(123, 18, 48, 0.08);
         }
 
-        .form-input:focus~.input-icon,
-        .form-input:focus+.input-icon {
-            color: var(--primary);
-        }
-
-        /* Password toggle */
         .password-toggle {
             position: absolute;
             right: 14px;
@@ -374,7 +362,6 @@
             color: var(--text-primary);
         }
 
-        /* Remember & Forgot */
         .form-options {
             display: flex;
             justify-content: space-between;
@@ -400,7 +387,6 @@
             cursor: pointer;
         }
 
-        /* Submit button */
         .btn-login {
             width: 100%;
             padding: 15px 24px;
@@ -459,12 +445,15 @@
             transform: translateX(4px);
         }
 
-        /* Loading state */
         .btn-login.loading {
             pointer-events: none;
         }
 
         .btn-login.loading span {
+            opacity: 0;
+        }
+
+        .btn-login.loading .btn-arrow {
             opacity: 0;
         }
 
@@ -486,7 +475,6 @@
             }
         }
 
-        /* Error message */
         .error-message {
             background: #fef2f2;
             border: 1px solid #fecaca;
@@ -523,7 +511,6 @@
             }
         }
 
-        /* Success state */
         .success-overlay {
             position: fixed;
             inset: 0;
@@ -584,7 +571,6 @@
             color: var(--text-secondary);
         }
 
-        /* Security badge footer */
         .login-footer {
             margin-top: 40px;
             text-align: center;
@@ -619,12 +605,8 @@
                 padding: 40px 24px 36px;
             }
 
-            .brand-stats {
-                display: none;
-            }
-
+            .brand-stats,
             .brand-desc {
-                margin-bottom: 0;
                 display: none;
             }
 
@@ -677,7 +659,6 @@
 
             .form-input {
                 padding: 12px 12px 12px 40px;
-                font-size: 14px;
             }
 
             .btn-login {
@@ -693,22 +674,18 @@
     <div class="brand-panel">
         <div class="float-shape float-shape-1"></div>
         <div class="float-shape float-shape-2"></div>
-
         <div class="brand-content">
             <div class="brand-logo-container">
                 <div class="brand-logo-ring"></div>
                 <img src="logo-kejaksaan.png" alt="Logo Kejaksaan Tinggi Kepulauan Riau" class="brand-logo">
             </div>
-
             <h1 class="brand-title">Kejaksaan Tinggi<br>Kepulauan Riau</h1>
             <div class="brand-subtitle">DASKRIMTI</div>
             <div class="brand-divider"></div>
-
             <p class="brand-desc">
                 Dashboard Kriminalitas Terpadu untuk monitoring kehadiran pegawai
                 dan manajemen perkara secara real-time.
             </p>
-
             <div class="brand-stats">
                 <div class="brand-stat">
                     <span class="brand-stat-value">142</span>
@@ -729,7 +706,6 @@
     <!-- RIGHT: Login Form -->
     <div class="login-panel">
         <div class="login-container">
-
             <div class="login-welcome">
                 <div class="login-welcome-label">Selamat Datang</div>
                 <h2>Masuk ke Portal</h2>
@@ -737,7 +713,6 @@
             </div>
 
             <form class="login-form" id="loginForm" autocomplete="off">
-
                 <div id="errorMsg" class="error-message">
                     <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="10"></circle>
@@ -819,39 +794,28 @@
 
     <script>
         // ============================================
-        // AUTH CONFIGURATION
+        // SUPABASE AUTH CONFIGURATION
         // ============================================
-        const VALID_CREDENTIALS = [
-            { username: 'admin', password: 'admin123' },
-            { username: 'daskrimti', password: 'kejari2025' }
-        ];
+        var SUPABASE_URL = 'https://imiwlmuvelhihyfuumkw.supabase.co';
+        var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImltaXdsbXV2ZWxoaWh5ZnV1bWt3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA4NzgxMDksImV4cCI6MjA4NjQ1NDEwOX0.OJVW8to47hCJ83fZSHeuPoBdOh7M15CQOYv0Ds56ncs';
+        var EMAIL_DOMAIN = '@kejari.go.id';
 
-        const AUTH_KEY = 'daskrimti_auth';
-        const AUTH_EXPIRY = 24 * 60 * 60 * 1000; // 24 hours
+        var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         // ============================================
-        // CHECK IF ALREADY LOGGED IN
+        // CHECK IF ALREADY LOGGED IN (Supabase session)
         // ============================================
-        function checkAuth() {
-            var auth = localStorage.getItem(AUTH_KEY);
-            if (auth) {
-                try {
-                    var data = JSON.parse(auth);
-                    if (data.timestamp && (Date.now() - data.timestamp) < AUTH_EXPIRY) {
-                        window.location.href = 'portal.html';
-                        return true;
-                    } else {
-                        localStorage.removeItem(AUTH_KEY);
-                    }
-                } catch (e) {
-                    localStorage.removeItem(AUTH_KEY);
+        async function checkSession() {
+            try {
+                var result = await sb.auth.getSession();
+                if (result.data.session) {
+                    window.location.href = 'portal.html';
                 }
+            } catch (e) {
+                console.log('No active session');
             }
-            return false;
         }
-
-        // Check on page load
-        checkAuth();
+        checkSession();
 
         // ============================================
         // FORM HANDLING
@@ -878,71 +842,63 @@
             }
         });
 
-        // Form submit
+        // Form submit — uses Supabase Auth
         form.addEventListener('submit', function (e) {
             e.preventDefault();
 
-            var username = document.getElementById('username').value.trim();
+            var username = document.getElementById('username').value.trim().toLowerCase();
             var password = document.getElementById('password').value;
 
-            // Hide previous error
             errorMsg.classList.remove('show');
 
-            // Validate
             if (!username || !password) {
                 showError('Mohon isi username dan password');
                 return;
             }
 
-            // Show loading
             btnLogin.classList.add('loading');
 
-            // Simulate auth delay for professional feel
-            setTimeout(function () {
-                var isValid = VALID_CREDENTIALS.some(function (cred) {
-                    return cred.username === username && cred.password === password;
-                });
+            // Convert username to email for Supabase
+            var email = username.includes('@') ? username : username + EMAIL_DOMAIN;
 
-                if (isValid) {
-                    // Save auth
-                    var authData = {
-                        username: username,
-                        timestamp: Date.now(),
-                        remember: document.getElementById('rememberMe').checked
-                    };
-                    localStorage.setItem(AUTH_KEY, JSON.stringify(authData));
+            sb.auth.signInWithPassword({
+                email: email,
+                password: password
+            }).then(function (result) {
+                if (result.error) {
+                    btnLogin.classList.remove('loading');
 
-                    // Show success
+                    if (result.error.message.includes('Invalid login')) {
+                        showError('Username atau password salah. Silakan coba lagi.');
+                    } else if (result.error.message.includes('Email not confirmed')) {
+                        showError('Akun belum dikonfirmasi. Hubungi administrator.');
+                    } else {
+                        showError('Gagal login: ' + result.error.message);
+                    }
+
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                } else {
+                    // Login berhasil
                     successOverlay.classList.add('show');
-
-                    // Redirect
                     setTimeout(function () {
                         window.location.href = 'portal.html';
                     }, 1200);
-                } else {
-                    btnLogin.classList.remove('loading');
-                    showError('Username atau password salah. Silakan coba lagi.');
-
-                    // Shake the password field
-                    passwordInput.style.animation = 'none';
-                    passwordInput.offsetHeight; // Trigger reflow
-                    passwordInput.value = '';
-                    passwordInput.focus();
                 }
-            }, 800);
+            }).catch(function (err) {
+                btnLogin.classList.remove('loading');
+                showError('Terjadi kesalahan koneksi. Coba lagi.');
+            });
         });
 
         function showError(msg) {
             errorText.textContent = msg;
             errorMsg.classList.add('show');
-
-            // Auto-hide after 5s
             setTimeout(function () {
                 errorMsg.classList.remove('show');
             }, 5000);
         }
 
-        // Enter key handling
         document.getElementById('username').addEventListener('keydown', function (e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
