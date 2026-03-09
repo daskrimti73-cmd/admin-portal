@@ -1,0 +1,73 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          
+      - name: Validate HTML files
+        run: |
+          echo "🔍 Validating HTML files..."
+          # Check if required files exist
+          if [ ! -f "github-pages/index.html" ]; then
+            echo "❌ Error: index.html not found!"
+            exit 1
+          fi
+          if [ ! -f "github-pages/admin.html" ]; then
+            echo "❌ Error: admin.html not found!"
+            exit 1
+          fi
+          echo "✅ All required files exist"
+          
+      - name: Check for syntax errors
+        run: |
+          echo "🔍 Checking for common syntax errors..."
+          # Check for unclosed tags (basic check)
+          for file in github-pages/*.html; do
+            echo "Checking $file..."
+            if grep -q "<script>" "$file" && ! grep -q "</script>" "$file"; then
+              echo "⚠️ Warning: Unclosed script tag in $file"
+            fi
+          done
+          echo "✅ Syntax check complete"
+          
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/main'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./github-pages
+          publish_branch: gh-pages
+          force_orphan: true
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: 'Deploy: ${{ github.event.head_commit.message }}'
+          
+      - name: Deployment Summary
+        if: success()
+        run: |
+          echo "✅ Deployment successful!"
+          echo "📦 Files deployed from: ./github-pages"
+          echo "🌐 Website URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+          echo "🕐 Deployed at: $(date)"
+          
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "❌ Deployment failed!"
+          echo "Please check the logs above for errors."
